@@ -516,6 +516,21 @@ testCM("findMarksMiddle", function(cm) {
   eq(found[0], mark);
 }, {value: "line 0\nline 1\nline 2\nline 3"});
 
+testCM("findMarksAtEndOfSingleLine", function(cm) {
+  var mark = cm.markText(Pos(0, 0), Pos(0, 3));
+  var found = cm.findMarksAt(Pos(0, 4));
+  eq(found.length, 0);
+}, {value: "mark"});
+
+testCM("findMarksOnLine", function(cm) {
+  var mark1 = cm.markText(Pos(0, 0), Pos(0, 6));
+  var mark2 = cm.markText(Pos(0, 8), Pos(0, 14));
+  var found = cm.findMarksOnLine(0);
+  eq(found.length, 2);
+  eq(found[0], mark1);
+  eq(found[1], mark2);
+}, {value: "mark 0, mark 1"});
+
 testCM("deleteSpanCollapsedInclusiveLeft", function(cm) {
   var from = Pos(1, 0), to = Pos(1, 1);
   var m = cm.markText(from, to, {collapsed: true, inclusiveLeft: true});
