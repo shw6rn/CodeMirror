@@ -68,7 +68,7 @@
 var nonEmpty = false;
 var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
   mode: "application/xml",
-  styleActiveLine: true,
+  styleActiveLine: undefined,
   lineNumbers: true,
   lineWrapping: true
 });
@@ -79,6 +79,14 @@ function toggleSelProp() {
   var label = nonEmpty ? 'Disable nonEmpty option' : 'Enable nonEmpty option';
   document.getElementById('toggleButton').innerText = label;
 }
+
+editor.on('blur', function() {
+  editor.setOption('styleActiveLine', undefined);
+});
+editor.on('focus', function() {
+  editor.setOption('styleActiveLine', {nonEmpty: true});
+});
+
 </script>
 
     <p>Styling the current cursor line.</p>
